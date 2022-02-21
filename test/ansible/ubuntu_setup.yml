@@ -1,0 +1,44 @@
+---
+- name: Local Dev Setup
+  hosts:
+    - localhost
+  become: true
+  gather_facts: false
+  vars:
+    something: better than nothing
+  tasks:
+    - name: apt update
+      apt:
+        update-cache: true
+
+    - name: apt upgrade
+      apt:
+        name: "*"
+
+    - name: apt install
+      apt:
+        pkg:
+          - unzip
+          - aptitude
+
+    - name: install sshpass
+      apt:
+        name: sshpass
+        state: present
+        update_cache: true
+
+    - name: set terraform version 
+      set_fact: 
+        tf_version: 1.1.4
+
+    - name: Unarchive terraform
+      unarchive:
+        src: https://releases.hashicorp.com/terraform/{{ tf_version }}/terraform_{{ tf_version }}_linux_amd64.zip
+        dest: /usr/local/bin
+        remote_src: true
+
+    - name: validate terraform install
+      shell: terraform -v
+      register: result_tf
+    - debug:
+        var: result_tf

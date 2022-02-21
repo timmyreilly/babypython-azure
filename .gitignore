@@ -17,6 +17,8 @@ __pycache__/
 # Auto-generated virtual environment
 /env/
 
+.venv
+
 # Auto-generated web.config
 /web.config
 

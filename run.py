@@ -1,4 +1,5 @@
-
+from datetime import datetime
+from flask import render_template
 from flask import Flask
 app = Flask(__name__)
 
@@ -17,6 +18,15 @@ def generate_login(parameters):
     session = new_session(parameters.identifier, credential)
     return session 
 
+
+@app.route('/home')
+def home():
+    """Renders the home page."""
+    return render_template(
+        'FlaskkWebProject/templates/index.html',
+        title='Home Page',
+        year=datetime.now().year,
+    )
 
 @app.route("/")
 def hello():
